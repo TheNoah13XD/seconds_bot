@@ -1,19 +1,19 @@
 import { config } from "dotenv";
 import { resolve } from "path";
 
-const EnvFile = process.env.NODE_ENV === "development" 
-  ? ".env.local" 
-  : ".env";
+const MODE = process.env.NODE_ENV === "development"
+  	? ".env.local"
+  	: ".env";
 
-const EnvFilePath = resolve(process.cwd(), EnvFile);
+const EnvPath = resolve(process.cwd(), MODE);
 
-config({ path: EnvFilePath });
+config({ path: EnvPath });
 
-export function getEnvVar(name: string, fallback?: string): string {
-    const value = process.env[name] ?? fallback;
-    if (value === undefined) {
-        throw new Error(`Environment variable ${name} is not defined.`);
-    }
+export const getEnvVar = (name: string, fallback?: string): string => {
+	const value = process.env[name] ?? fallback;
+	if (value === undefined) {
+		throw new Error(`Missing environment variable: ${name}`);
+	}
 
-    return value;
+	return value;
 }
