@@ -7,7 +7,7 @@ type Command = {
     data: SlashCommandBuilder,
 }
 
-const commands = [];
+const commands: SlashCommandBuilder[]  = [];
 
 for (const command of Object.values<Command>(commandModules)) {
     commands.push(command.data);
@@ -15,15 +15,15 @@ for (const command of Object.values<Command>(commandModules)) {
 
 const rest = new REST({ version: '9' }).setToken(Keys.clientToken);
 
-(async () => {
+export const registerSlashCommands = async() => {
 	try {
 		const data = await rest.put(
 			Routes.applicationCommands(Keys.clientId),
 			{ body: commands },
 		)
         
-        console.log('Successfully registered application commands.')
+        console.log('successfully registered application commands.')
 	} catch (error) {
 		console.error(error);
 	}
-})();
+}

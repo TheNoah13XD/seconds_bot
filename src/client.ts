@@ -1,5 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { registerEvents } from "./utils/index.js";
+import { registerSlashCommands } from "./utils/commands.js";
 import { db } from "../prisma/index.js";
 import Events from "./events/index.js";
 import Keys from "./keys.js";
@@ -9,6 +10,8 @@ const client = new Client({
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildModeration,
+        GatewayIntentBits.GuildIntegrations,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.DirectMessages,
     ],
@@ -30,6 +33,7 @@ main()
     });
 
 registerEvents(client, Events);
+registerSlashCommands();
 
 client.login(Keys.clientToken)
     .catch((err) => {
